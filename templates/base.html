@@ -32,6 +32,13 @@
         <li class="nav-item">
           <a class="nav-link" href="/add/">Add a Customer</a>
         </li>
+        <li class="nav-item">
+          <form action="/find/{{ lastName }}" method="GET">
+            <label for="lastName"></label>
+            <input type="text" name="lastName" id="lastName" placeholder="last name">
+            <input type="submit" value="Search">
+          </form>
+        </li>
       </ul>
     </div>
   </nav>

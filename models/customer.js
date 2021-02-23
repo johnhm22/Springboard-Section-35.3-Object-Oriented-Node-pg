@@ -61,6 +61,27 @@ class Customer {
     return new Customer(customer);
   }
 
+static async searchCustomer(lastName){
+  const results = await db.query(
+    `SELECT
+    first_name AS "firstName",  
+    last_name AS "lastName", 
+    phone, 
+    notes 
+   FROM customers WHERE last_name = $1`,
+ [lastName]
+  );
+  const customer = results.rows[0]
+  
+  if(customer === undefined) {
+    const err = new Error(`Sorry, cannot find that customer`);
+    err.status = 404;
+    throw err;
+  }
+}
+
+
+
   /** get all reservations for this customer. */
 
   async getReservations() {

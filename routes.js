@@ -36,6 +36,7 @@ router.post("/add/", async function(req, res, next) {
     const lastName = req.body.lastName;
     const phone = req.body.phone;
     const notes = req.body.notes;
+    console.log("This is req.body: ", req.body)
 
     const customer = new Customer({ firstName, lastName, phone, notes });
     await customer.save();
@@ -59,6 +60,22 @@ router.get("/:id/", async function(req, res, next) {
     return next(err);
   }
 });
+
+//show customer from search
+router.get("/find/:lastName", async function(req, res, next) {
+  try {
+    console.log("This is the req.params.lastName: ", req.params.lastName);
+    const customer = new Customer.searchCustomer(req.params.lastName);
+    const reservations = await customer.getReservations();
+
+    return res.render("customer_detail.html", { customer, reservations });
+  } catch (err) {
+    return next(err);
+  }
+});
+
+
+
 
 /** Show form to edit a customer. */
 
